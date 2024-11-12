@@ -37,6 +37,12 @@ const retry = (fn: (res: any) => void) => {
   return Bluebird.delay(25).then(fn)
 }
 
+type GenericHandler = { on: (event: string, listener: (...args: any[]) => void) => void }
+type ExtendedSocketIoServer = socketIo.SocketIOServer & GenericHandler
+type ExtendedSocketIoNamespace = socketIo.SocketIONamespace & GenericHandler
+
+type ExtendedCDPSocketServer = CDPSocketServer & GenericHandler
+
 export class SocketBase {
   private _sendResetBrowserTabsForNextSpecMessage
   private _sendResetBrowserStateMessage
@@ -47,8 +53,8 @@ export class SocketBase {
   protected inRunMode: boolean
   protected supportsRunEvents: boolean
   protected ended: boolean
-  protected _socketIo?: socketIo.SocketIOServer
-  protected _cdpIo?: CDPSocketServer
+  protected _socketIo?: ExtendedSocketIoServer
+  protected _cdpIo?: ExtendedCDPSocketServer
   localBus: EventEmitter
 
   constructor (config: Record<string, any>) {
@@ -153,7 +159,7 @@ export class SocketBase {
 
     const { socketIoRoute, socketIoCookie } = config
 
-    const socketIo = this._socketIo = this.createSocketIo(server, socketIoRoute, socketIoCookie)
+    const socketIo = this._socketIo = this.createSocketIo(server, socketIoRoute, socketIoCookie) as ExtendedSocketIoServer
     const cdpIo = this._cdpIo = this.createCDPIo(socketIoRoute)
 
     automation.use({
@@ -593,7 +599,7 @@ export class SocketBase {
     })
 
     this.getIos().forEach((io) => {
-      io?.of('/data-context').on('connection', (socket: Socket) => {
+      (io?.of('/data-context') as ExtendedSocketIoNamespace).on('connection', (socket: Socket) => {
         socket.on('graphql:request', handleGraphQLSocketRequest)
       })
     })

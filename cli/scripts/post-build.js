@@ -11,9 +11,7 @@ const npmModulesToCopy = [
   'react',
   'react18',
   'vue',
-  'vue2',
   'angular',
-  'angular-signals',
   'svelte',
 ]
 

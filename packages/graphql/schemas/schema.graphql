@@ -1181,7 +1181,6 @@ enum ErrorTypeEnum {
   CONFIG_VALIDATION_MSG_ERROR
   COULD_NOT_PARSE_ARGUMENTS
   DEFAULT_SUPPORT_FILE_NOT_FOUND
-  DEPRECATED_BEFORE_BROWSER_LAUNCH_ARGS
   DEV_SERVER_CONFIG_FILE_NOT_FOUND
   DUPLICATE_TASK_KEY
   ERROR_READING_FILE
@@ -2551,7 +2550,7 @@ type WizardErroredFramework implements Node {
 
 """A frontend framework that we can setup within the app"""
 type WizardFrontendFramework implements Node {
-  """The category (framework, like react-scripts, or library, like react"""
+  """The category (framework, like next.js, or library, like react"""
   category: String!
 
   """Raw SVG icon of framework"""
