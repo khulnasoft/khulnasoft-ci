@@ -18,6 +18,7 @@ export default defineConfig({
 
       return await e2ePluginSetup(on, config)
     },
+    injectDocumentDomain: true, // because these are cy in cy test, document domain injection is necessary
   },
   retries: {
     runMode: 2,
