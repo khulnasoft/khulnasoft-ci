@@ -76,8 +76,8 @@ export class RemoteStates {
   }
 
   get (url: string) {
-    debug('get (origin key)', this.documentDomainInjection.getOriginKey(url), this.remoteStates)
-    const state = this.remoteStates.get(this.documentDomainInjection.getOriginKey(url))
+    debug('get (origin key)', this.documentDomainInjection.getOrigin(url), this.remoteStates)
+    const state = this.remoteStates.get(this.documentDomainInjection.getOrigin(url))
 
     debug('getting remote state: %o for: %s', state, url)
 
@@ -99,7 +99,7 @@ export class RemoteStates {
   }
 
   isPrimarySuperDomainOrigin (url: string): boolean {
-    return this.primaryOriginKey === this.documentDomainInjection.getOriginKey(url)
+    return this.primaryOriginKey === this.documentDomainInjection.getOrigin(url)
   }
 
   reset () {
@@ -147,7 +147,7 @@ export class RemoteStates {
       } :
       urlOrState
 
-    this.currentOriginKey = this.documentDomainInjection.getOriginKey(state.origin)
+    this.currentOriginKey = this.documentDomainInjection.getOrigin(state.origin)
 
     if (isPrimaryOrigin) {
       // convert map to array

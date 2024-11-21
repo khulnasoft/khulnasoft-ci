@@ -31,7 +31,7 @@ describe('remote states', () => {
     // While the behavior of this class is partially determined by DocumentDomainInjection,
     // it's not necessary to test multiple permutations of its getOriginKey - as long as it's
     // returning an appropriate origin key, this class will behave as expected.
-    documentDomainInjection.getOriginKey.callsFake((url) => {
+    documentDomainInjection.getOrigin.callsFake((url) => {
       return new URL(url).origin
     })
 
@@ -42,7 +42,7 @@ describe('remote states', () => {
 
   context('#get', () => {
     it('returns the remote state for an origin when a matching origin key is returned from DocumentDomainInjection', function () {
-      documentDomainInjection.getOriginKey.returns('http://localhost:3500')
+      documentDomainInjection.getOrigin.returns('http://localhost:3500')
       const state = remoteStates.get('http://localhost:3500/foobar')
 
       expect(state).to.deep.equal({

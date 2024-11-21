@@ -19,7 +19,7 @@ import { cookieJar, SameSiteContext, automationCookieToToughCookie, Serializable
 import runEvents from './plugins/run_events'
 import type { OTLPTraceExporterCloud } from '@packages/telemetry'
 import { telemetry } from '@packages/telemetry'
-
+import type { Automation } from './automation'
 // eslint-disable-next-line no-duplicate-imports
 import type { Socket } from '@packages/socket'
 
@@ -129,7 +129,7 @@ export class SocketBase {
 
   startListening (
     server: DestroyableHttpServer,
-    automation,
+    automation: Automation,
     config,
     options,
     callbacks: StartListeningCallbacks,

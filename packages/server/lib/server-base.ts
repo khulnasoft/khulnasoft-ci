@@ -43,6 +43,8 @@ import stream from 'stream'
 import isHtml from 'is-html'
 import type Protocol from 'devtools-protocol'
 import type { ServiceWorkerClientEvent } from '@packages/proxy/lib/http/util/service-worker-manager'
+import type { Automation } from './automation'
+import type { AutomationCookie } from './automation/cookies'
 
 const debug = Debug('cypress:server:server-base')
 
@@ -469,7 +471,7 @@ export class ServerBase<TSocket extends SocketE2E | SocketCt> {
     })
   }
 
-  startWebsockets (automation, config, options: Record<string, unknown> = {}) {
+  startWebsockets (automation: Automation, config, options: Record<string, unknown> = {}) {
     // e2e only?
     options.onResolveUrl = this._onResolveUrl.bind(this)
 
@@ -747,7 +749,7 @@ export class ServerBase<TSocket extends SocketE2E | SocketCt> {
     })
   }
 
-  _onResolveUrl (urlStr, userAgent, automationRequest, options: Record<string, any> = { headers: {} }) {
+  _onResolveUrl (urlStr, userAgent, automationRequest: (message: string, data: Record<string, unknown>) => Bluebird<any>, options: Record<string, any> = { headers: {} }) {
     debug('resolving visit %o', {
       url: urlStr,
       userAgent,
@@ -861,17 +863,12 @@ export class ServerBase<TSocket extends SocketE2E | SocketCt> {
 
           return runPhase(() => {
             // get the cookies that would be sent with this request so they can be rehydrated
-            // TODO: replace with logic based on config.injectDocumentDomain
-            const domain = newUrl ?
-              this._config.injectDocumentDomain ?
-                cors.getSuperDomain(newUrl) :
-                new URL(newUrl).hostname :
-              undefined
+            const hostname = newUrl ? this._documentDomainInjection.getHostname(newUrl) : undefined
 
             return automationRequest('get:cookies', {
-              domain,
+              domain: hostname,
             })
-            .then((cookies) => {
+            .then((cookies: (AutomationCookie | null)[]) => {
               const statusIs2xxOrAllowedFailure = () => {
                 // is our status code in the 2xx range, or have we disabled failing
                 // on status code?
@@ -921,20 +918,21 @@ export class ServerBase<TSocket extends SocketE2E | SocketCt> {
                 // TODO: think about moving this logic back into the frontend so that the driver can be in control
                 // of when to buffer and set the remote state
                 if (isOk && details.isHtml) {
-                  const urlDoesNotMatchPolicy = options.hasAlreadyVisitedUrl
-                    && !cors.urlMatchesPolicy({ policy: this._originPolicy, frameUrl: primaryRemoteState.origin, topUrl: newUrl || '' })
+                  const originsMatchByPolicy = this._documentDomainInjection.urlsMatch(primaryRemoteState.origin, newUrl || '')
+
+                  const urlDoesNotMatchPolicyBasedOnDomain = options.hasAlreadyVisitedUrl
+                    && !originsMatchByPolicy
                     || options.isFromSpecBridge
 
                   debug('urlDoesNotMatchPolicy?', {
-                    urlDoesNotMatchPolicy,
+                    urlDoesNotMatchPolicyBasedOnDomain,
                     hasAlreadyVisited: options.hasAlreadyVisited,
-                    corsArgs: { policy: this._originPolicy, frameUrl: primaryRemoteState.origin, topUrl: newUrl || '' },
-                    corsResult: !cors.urlMatchesPolicy({ policy: this._originPolicy, frameUrl: primaryRemoteState.origin, topUrl: newUrl || '' }),
+                    originsMatchByPolicy,
                     isFromSpecBridge: options.isFromSpecBridge,
                   })
 
                   if (!handlingLocalFile) {
-                    this._remoteStates.set(newUrl as string, options, !urlDoesNotMatchPolicy)
+                    this._remoteStates.set(newUrl as string, options, !urlDoesNotMatchPolicyBasedOnDomain)
                   }
 
                   const responseBufferStream = new stream.PassThrough({
@@ -949,7 +947,7 @@ export class ServerBase<TSocket extends SocketE2E | SocketCt> {
                     details,
                     originalUrl,
                     response: incomingRes,
-                    urlDoesNotMatchPolicyBasedOnDomain: urlDoesNotMatchPolicy,
+                    urlDoesNotMatchPolicyBasedOnDomain,
                   })
                 } else {
                   // TODO: move this logic to the driver too for
