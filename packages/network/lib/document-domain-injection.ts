@@ -30,7 +30,7 @@ export class DocumentDomainInjection {
 
   // primarily used by `packages/server/lib/remote_states` to determine ??
   public getOrigin (url: string) {
-    if (this.config.injectDocumentDomain || url.includes('localhost')) {
+    if (this.config.injectDocumentDomain) {
       return getSuperDomainOrigin(url)
     }
 
@@ -38,8 +38,9 @@ export class DocumentDomainInjection {
   }
 
   public getHostname (url: string) {
-    if (this.config.injectDocumentDomain || url.includes('localhost')) {
-      debug('Hostname returning superdomain. Config %s url %s includes localhost? %s', this.config.injectDocumentDomain, url, url.includes('localhost'))
+    if (this.config.injectDocumentDomain) {
+      debug('Hostname returning superdomain. Config %s url %s', this.config.injectDocumentDomain, url)
+      debug('superdomain:', getSuperDomain(url))
 
       return getSuperDomain(url)
     }
@@ -53,12 +54,8 @@ export class DocumentDomainInjection {
     const frameProps = isString(frameUrl) ? parseUrlIntoHostProtocolDomainTldPort(frameUrl) : frameUrl
     const topProps = isString(topUrl) ? parseUrlIntoHostProtocolDomainTldPort(topUrl) : topUrl
 
-    debug('urlsMatch %', { frameUrl, topUrl })
-    const derivedPolicy: Policy = (topProps.tld?.includes('localhost') || frameProps.tld?.includes('localhost')) ?
-      'same-super-domain-origin' : this.policy
-
-    debug('urlsMatch derived policy:', derivedPolicy)
-    switch (derivedPolicy) {
+    debug('urlsMatch %s policy %o', this.policy, { frameUrl, topUrl })
+    switch (this.policy) {
       case 'same-origin':
         return isEqual(frameProps, topProps)
       case 'same-super-domain-origin':
@@ -85,6 +82,8 @@ export class DocumentDomainInjection {
     // localhost is special, and we need to always set document domain for
     // localhost pages
 
-    return !!(this.config.injectDocumentDomain) || url.includes('localhost')
+    debug('should set domain for url %s? config: %s, result:', url, this.config.injectDocumentDomain, !!(this.config.injectDocumentDomain))
+
+    return !!(this.config.injectDocumentDomain)
   }
 }
