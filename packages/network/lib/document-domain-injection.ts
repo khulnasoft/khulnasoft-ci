@@ -57,6 +57,8 @@ export class DocumentDomainInjection {
     debug('urlsMatch %s policy %o', this.policy, { frameUrl, topUrl })
     switch (this.policy) {
       case 'same-origin':
+        debug('match? ', isEqual(frameProps, topProps))
+
         return isEqual(frameProps, topProps)
       case 'same-super-domain-origin':
       case 'schemeful-same-site': {
@@ -66,6 +68,8 @@ export class DocumentDomainInjection {
         const doPortsPassSameSchemeCheck = this.policy === 'same-super-domain-origin' ?
           framePort === topPort : // ports have to match precisely with same-super-domain-origin
           (framePort === topPort) || (framePort !== '443' && topPort !== '443') // schemeful-same-site needs them to match, unless neither are https
+
+        debug('match? ', doPortsPassSameSchemeCheck, isEqual(parsedFrameUrl, parsedTopUrl))
 
         return doPortsPassSameSchemeCheck && isEqual(parsedFrameUrl, parsedTopUrl)
       }
