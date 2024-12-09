@@ -112,7 +112,9 @@ const getInvocationDetails = (specWindow, config) => {
     // firefox throws a different stack than chromium
     // which includes stackframes from cypress_runner.js.
     // So we drop the lines until we get to the spec stackframe (includes __cypress/tests)
-    if (specWindow.Cypress && specWindow.Cypress.isBrowser('firefox')) {
+    if (specWindow.Cypress && (
+      specWindow.Cypress.isBrowser('firefox') || specWindow.Cypress.isBrowser('chrome')
+    )) {
       stack = stackWithLinesDroppedFromMarker(stack, '__cypress/tests', true)
     }
 
@@ -204,6 +206,10 @@ const getCodeFrameStackLine = (err, stackIndex) => {
 }
 
 const getCodeFrame = (err, stackIndex) => {
+  // console.log('getCodeFrame', {
+  //   stackIndex,
+  // })
+
   if (err.codeFrame) return err.codeFrame
 
   const stackLine = getCodeFrameStackLine(err, stackIndex)
@@ -211,6 +217,8 @@ const getCodeFrame = (err, stackIndex) => {
   if (!stackLine) return
 
   const { fileUrl, originalFile } = stackLine
+
+  // console.log('getting code frame from source', JSON.stringify({ fileUrl, originalFile, stackLine }, null, 2))
 
   return getCodeFrameFromSource($sourceMapUtils.getSourceContents(fileUrl, originalFile), stackLine)
 }
