@@ -70,6 +70,13 @@ const stackWithReplacementMarkerLineRemoved = (stack) => {
   })
 }
 
+const stackPriorToReplacementMarker = (stack) => {
+  return _.chain(stack).split('\n')
+  .takeWhile((line) => !line.includes(STACK_REPLACEMENT_MARKER))
+  .join('\n')
+  .value()
+}
+
 export type StackAndCodeFrameIndex = {
   stack: string
   index?: number
@@ -106,7 +113,6 @@ const getInvocationDetails = (specWindow, config) => {
   if (specWindow.Error) {
     let stack = (new specWindow.Error()).stack
 
-    console.log('getInvocationDetails stack', stack)
     // note: specWindow.Cypress can be undefined or null
     // if the user quickly reloads the tests multiple times
 
@@ -209,7 +215,6 @@ const getCodeFrame = (err, stackIndex) => {
 
   const stackLine = getCodeFrameStackLine(err, stackIndex)
 
-  console.log('getCodeFrame', { stack: err.stack, stackIndex, stackLine })
   if (!stackLine) return
 
   const { fileUrl, originalFile } = stackLine
@@ -514,6 +519,7 @@ export default {
   stackWithLinesDroppedFromMarker,
   stackWithoutMessage,
   stackWithReplacementMarkerLineRemoved,
+  stackPriorToReplacementMarker,
   stackWithUserInvocationStackSpliced,
   captureUserInvocationStack,
   getInvocationDetails,

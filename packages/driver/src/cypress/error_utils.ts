@@ -155,6 +155,14 @@ const getUserInvocationStack = (err, state) => {
 
   if (!userInvocationStack) return
 
+  // In CT with vite, the user invocation stack includes internal cypress code, so clean it up
+
+  // remove lines that are included _prior_ to the first userland line
+  userInvocationStack = $stackUtils.stackWithLinesDroppedFromMarker(userInvocationStack, '/__cypress', true)
+
+  // remove lines that are included _after and including_ the replacement marker
+  userInvocationStack = $stackUtils.stackPriorToReplacementMarker(userInvocationStack)
+
   if (
     isCypressErr(err)
     || isAssertionErr(err)
@@ -451,27 +459,8 @@ const enhanceStack = ({ err, userInvocationStack, projectRoot }: {
   userInvocationStack?: any
   projectRoot?: any
 }) => {
-  let invocationStack = userInvocationStack
-
-  if (err.codeFrame === undefined) {
-    //console.log('enhanceStack - no codeframe, so dropping lines til marker')
-    err.stack = $stackUtils.stackWithLinesDroppedFromMarker(err.stack, '/__cypress', true)
-    // sometimes the userInvocationStack has internals, so drop them
-    invocationStack = userInvocationStack ? $stackUtils.stackWithLinesDroppedFromMarker(userInvocationStack, '/__cypress', true) : undefined
-    // sometimes the userInvocationStack includes the replacement marker, so drop everything after that
-    //invocationStack = invocationStack ? $stackUtils.stackPriorToReplacementMarker(invocationStack) : undefined
-  }
-
-  const { stack, index } = preferredStackAndCodeFrameIndex(err, invocationStack)
-
-  //console.log('enhanceStack stack', stack)
+  const { stack, index } = preferredStackAndCodeFrameIndex(err, userInvocationStack)
   const { sourceMapped, parsed } = $stackUtils.getSourceStack(stack, projectRoot)
-
-  // console.log('enhanceStack err', err)
-  // console.log('enhanceStack userInvocationStack', userInvocationStack)
-  // console.log('enhanceStack projectRoot', projectRoot)
-  // console.log('enhanceStack parsed', parsed)
-  // console.log('enhanceStack sourceMapped', sourceMapped)
 
   err.stack = sourceMapped
   err.parsedStack = parsed
