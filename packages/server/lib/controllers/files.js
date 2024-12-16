@@ -31,7 +31,7 @@ module.exports = {
     debug('primary remote state', remoteStates.getPrimary())
     const { origin } = remoteStates.getPrimary()
 
-    const superDomain = injection.shouldSetDomainForUrl(origin) ? injection.getHostname(origin) : ''
+    const superDomain = injection.shouldInjectDocumentDomain(origin) ? injection.getHostname(origin) : ''
 
     const privilegedChannel = await privilegedCommandsManager.getPrivilegedChannel({
       browserFamily: req.query.browserFamily,
@@ -39,7 +39,7 @@ module.exports = {
       namespace: config.namespace,
       scripts: allFilesToSend,
       url: req.proxiedUrl,
-      documentDomainContext: injection.shouldSetDomainForUrl(origin),
+      documentDomainContext: injection.shouldInjectDocumentDomain(origin),
     })
 
     const iframeOptions = {
