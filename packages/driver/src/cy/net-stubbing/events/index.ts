@@ -55,8 +55,8 @@ export function registerEvents (Cypress: Cypress.Cypress, cy: Cypress.cy) {
     })
   }
 
-  function sendStaticResponse (requestId: string, staticResponse: StaticResponse) {
-    emitNetEvent('send:static:response', {
+  async function sendStaticResponse (requestId: string, staticResponse: StaticResponse) {
+    await emitNetEvent('send:static:response', {
       requestId,
       staticResponse: getBackendStaticResponse(staticResponse),
     })
@@ -93,7 +93,7 @@ export function registerEvents (Cypress: Cypress.Cypress, cy: Cypress.cy) {
       if (!route) {
         if (frame.subscription.await) {
           // route not found, just resolve so the request can continue
-          emitResolved(frame.data)
+          await emitResolved(frame.data)
         }
 
         return
