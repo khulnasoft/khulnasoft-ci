@@ -102,15 +102,3 @@ declare module 'url' {
     format(): string
   }
 }
-
-// Without this declaration, TypeScript will throw an error when importing an .svg file
-// Which we use in the frontend-shared package for our icons
-// declare module "*.svg" {
-//   const content: string;
-//   export default content;
-// }
-
-declare module '*.svg' {
-  const content: React.FunctionComponent<React.SVGAttributes<SVGElement>>
-  export default content
-}

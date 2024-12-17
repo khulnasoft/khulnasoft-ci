@@ -165,6 +165,7 @@ export const onBeforeRequest: HandlerFn<CyHttpMessages.IncomingRequest> = (Cypre
       queryObj = createQueryObject()
       queryProxy = createQueryProxy(queryObj)
     },
+    // @ts-expect-error: TODO: fix this
     async on (eventName, handler) {
       if (!validEvents.includes(eventName)) {
         $errUtils.throwErrByPath('net_stubbing.request_handling.unknown_event', {

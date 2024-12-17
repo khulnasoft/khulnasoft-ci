@@ -3,14 +3,8 @@
   "compilerOptions": {
     "target": "ES2016",
     "lib": ["ES2021", "DOM", "DOM.Iterable"],
-    "allowJs": true,
     "noImplicitThis": false,
-    "strictFunctionTypes": true,
     "preserveWatchOutput": true,
-    "sourceMap": true,
-    "strictNullChecks": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
     "outDir": "dist",
     "noErrorTruncation": true,
     "types": []

@@ -159,9 +159,9 @@ export class SocketBase {
     const cdpIo = this._cdpIo = this.createCDPIo(socketIoRoute)
 
     automation.use({
-      onPush: (message, data) => {
+      onPush: async (message, data) => {
         socketIo.emit('automation:push:message', message, data)
-        cdpIo.emit('automation:push:message', message, data)
+        await cdpIo.emit('automation:push:message', message, data)
       },
     })
 

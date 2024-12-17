@@ -61,7 +61,7 @@ export const useCohorts = () => {
    *
    * @returns a reactive reference to the cohort option that is selected
    */
-  const getCohort = (config: CohortConfig) => {
+  const getCohort = async (config: CohortConfig) => {
     const cohortOptionSelected = ref<CohortOption>()
 
     const { name, options } = config
@@ -78,7 +78,7 @@ export const useCohorts = () => {
         cohortOptionSelected.value = options.find((option) => option.cohort === cohortSelected.data?.determineCohort?.cohort)
       }
 
-      fetchCohort()
+      await fetchCohort()
     }
 
     return cohortOptionSelected

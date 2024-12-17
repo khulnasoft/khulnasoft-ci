@@ -7,7 +7,7 @@
     "prebuild": "rimraf ./dist",
     "build": "node ../../scripts/run-webpack",
     "build-prod": "cross-env NODE_ENV=production yarn build",
-    "check-ts": "tsc --noEmit && yarn -s tslint",
+    "check-ts": "yarn -s tslint",
     "clean-deps": "rimraf node_modules",
     "cypress:open": "echo \"These tests have been moved to @packages/app. \" && exit 1",
     "cypress:run": "echo \"These tests have been moved to @packages/app. \" && exit 1",

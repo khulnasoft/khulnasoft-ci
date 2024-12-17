@@ -159,7 +159,6 @@ export class Cookies {
 
     return automate(cookie)
     .then((cookie) => {
-      // @ts-expect-error: TODO: Look at this ts error
       cookie = normalizeGetCookieProps(cookie)
 
       debug('received set:cookie %o', cookie)
@@ -212,7 +211,6 @@ export class Cookies {
 
     return automate(data)
     .then((cookie) => {
-      // ts-expect-error: TODO: Look at this ts error
       cookie = normalizeCookieProps(cookie)
 
       debug('received clear:cookie %o', cookie)

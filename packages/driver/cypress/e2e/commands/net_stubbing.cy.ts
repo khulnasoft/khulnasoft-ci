@@ -1748,11 +1748,9 @@ describe('network stubbing', { retries: 15 }, function () {
         delay: 5000,
       }).as('create')
 
-      cy.then(() => {
-        fetch('/post-only', {
-          method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        })
-      })
+      cy.wrap(fetch('/post-only', {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      }))
 
       cy.wait('@create', { timeout: 500 })
     })
