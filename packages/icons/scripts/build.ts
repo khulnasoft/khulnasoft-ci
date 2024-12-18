@@ -24,5 +24,5 @@ async function build () {
   await fs.remove(iconsetPath)
 }
 
-/* tslint:disable:no-floating-promises TODO: look at this */
+// tslint:disable:no-floating-promises
 build()
