@@ -78,7 +78,7 @@ export const useCohorts = () => {
         cohortOptionSelected.value = options.find((option) => option.cohort === cohortSelected.data?.determineCohort?.cohort)
       }
 
-      // ts-disable:no-floating-promises TODO: This should be awaiting the fetchCohort call
+      // tslint:disable-next-line:no-floating-promises TODO: This should be awaiting the fetchCohort call
       fetchCohort()
     }
 
