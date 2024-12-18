@@ -11,7 +11,6 @@
     "../frontend-shared/src/**/*.tsx", 
     "../frontend-shared/cypress/**/*.ts"
   ],
-  "target": "ES2022",
   "compilerOptions": {
     "noImplicitThis": true,
     "paths": {
@@ -21,6 +20,7 @@
       "@cy/store/*": ["../frontend-shared/src/store/*"],
       "@packages/*": ["../*"]
     },
+    "target": "ES2022",
     "types": [
       "cypress", 
       "cypress-real-events", 
