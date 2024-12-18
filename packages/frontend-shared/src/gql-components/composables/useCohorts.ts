@@ -61,7 +61,7 @@ export const useCohorts = () => {
    *
    * @returns a reactive reference to the cohort option that is selected
    */
-  const getCohort = async (config: CohortConfig) => {
+  const getCohort = (config: CohortConfig) => {
     const cohortOptionSelected = ref<CohortOption>()
 
     const { name, options } = config
@@ -78,7 +78,8 @@ export const useCohorts = () => {
         cohortOptionSelected.value = options.find((option) => option.cohort === cohortSelected.data?.determineCohort?.cohort)
       }
 
-      await fetchCohort()
+      // ts-disable:no-floating-promises TODO: This should be awaiting the fetchCohort call
+      fetchCohort()
     }
 
     return cohortOptionSelected

@@ -1,6 +1,5 @@
 <template>
   <div data-cy="result">
-    <!-- @vue-expect-error TODO: this promise is not being awaited properly -->
     {{ cohortChoice?.value }}
   </div>
 </template>
