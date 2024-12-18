@@ -50,7 +50,8 @@ describe('Proxy Logging', () => {
       // TODO(webkit): fix+unskip for webkit release
       browser: '!webkit',
     }, (done) => {
-      cy.wrap(fetch('/some-url'))
+      // tslint:disable:no-floating-promises
+      fetch('/some-url')
 
       // trigger: Cypress.Log() called
       cy.once('log:added', (log) => {
@@ -137,8 +138,9 @@ describe('Proxy Logging', () => {
 
       // delay the fetch call by 100ms to ensure it gets
       // triggered during the cy.wait() below
-      setTimeout(async () => {
-        await fetch('/some-url')
+      // tslint:disable:no-floating-promises
+      setTimeout(() => {
+        fetch('/some-url')
       }, 100)
 
       cy.wait(200).then(() => {
@@ -186,7 +188,10 @@ describe('Proxy Logging', () => {
 
       it('intercept log has consoleProps with intercept info', (done) => {
         cy.intercept('/some-url', 'stubbed response').as('alias')
-        cy.wrap(fetch('/some-url'))
+        .then(() => {
+          // tslint:disable:no-floating-promises
+          fetch('/some-url')
+        })
 
         cy.on('log:changed', (log) => {
           if (log.displayName !== 'fetch') return
