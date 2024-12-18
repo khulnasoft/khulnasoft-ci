@@ -11,6 +11,7 @@
     "../frontend-shared/src/**/*.tsx", 
     "../frontend-shared/cypress/**/*.ts"
   ],
+  "target": "ES2022",
   "compilerOptions": {
     "noImplicitThis": true,
     "paths": {
