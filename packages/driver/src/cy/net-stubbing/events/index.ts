@@ -55,8 +55,9 @@ export function registerEvents (Cypress: Cypress.Cypress, cy: Cypress.cy) {
     })
   }
 
-  async function sendStaticResponse (requestId: string, staticResponse: StaticResponse) {
-    await emitNetEvent('send:static:response', {
+  function sendStaticResponse (requestId: string, staticResponse: StaticResponse) {
+    // tslint:disable-next-line:no-floating-promises
+    emitNetEvent('send:static:response', {
       requestId,
       staticResponse: getBackendStaticResponse(staticResponse),
     })
@@ -93,7 +94,8 @@ export function registerEvents (Cypress: Cypress.Cypress, cy: Cypress.cy) {
       if (!route) {
         if (frame.subscription.await) {
           // route not found, just resolve so the request can continue
-          await emitResolved(frame.data)
+          // tslint:disable-next-line:no-floating-promises
+          emitResolved(frame.data)
         }
 
         return

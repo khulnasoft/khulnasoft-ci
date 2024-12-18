@@ -34,7 +34,7 @@ export const onBeforeRequest: HandlerFn<CyHttpMessages.IncomingRequest> = (Cypre
   req.responseTimeout = Cypress.config('responseTimeout')
   const reqClone = _.cloneDeep(req)
 
-  const subscribe = async (eventName, handler) => {
+  const subscribe = (eventName, handler) => {
     const subscription: Subscription = {
       id: _.uniqueId('Subscription'),
       routeId,
@@ -49,7 +49,8 @@ export const onBeforeRequest: HandlerFn<CyHttpMessages.IncomingRequest> = (Cypre
 
     debug('created request subscription %o', { eventName, request, subscription, handler })
 
-    await emitNetEvent('subscribe', { requestId, subscription } as NetEvent.ToServer.Subscribe)
+    // tslint:disable-next-line:no-floating-promises
+    emitNetEvent('subscribe', { requestId, subscription } as NetEvent.ToServer.Subscribe)
   }
 
   const getCanonicalInterception = (): Interception => {
@@ -165,8 +166,8 @@ export const onBeforeRequest: HandlerFn<CyHttpMessages.IncomingRequest> = (Cypre
       queryObj = createQueryObject()
       queryProxy = createQueryProxy(queryObj)
     },
-    // @ts-expect-error: TODO: fix this
-    async on (eventName, handler) {
+    // tslint:disable-next-line:no-floating-promises
+    on (eventName, handler) {
       if (!validEvents.includes(eventName)) {
         $errUtils.throwErrByPath('net_stubbing.request_handling.unknown_event', {
           args: {
@@ -180,11 +181,12 @@ export const onBeforeRequest: HandlerFn<CyHttpMessages.IncomingRequest> = (Cypre
         $errUtils.throwErrByPath('net_stubbing.request_handling.event_needs_handler')
       }
 
-      await subscribe(eventName, handler)
+      // tslint:disable-next-line:no-floating-promises
+      subscribe(eventName, handler)
 
       return userReq
     },
-    async continue (responseHandler?) {
+    continue (responseHandler?) {
       if (resolved) {
         return $errUtils.throwErrByPath('net_stubbing.request_handling.completion_called_after_resolved', { args: { cmd: 'continue' } })
       }
@@ -204,7 +206,8 @@ export const onBeforeRequest: HandlerFn<CyHttpMessages.IncomingRequest> = (Cypre
       }
 
       // allow `req` to be sent outgoing, then pass the response body to `responseHandler`
-      await subscribe('response:callback', responseHandler)
+      // tslint:disable-next-line:no-floating-promises
+      subscribe('response:callback', responseHandler)
 
       return finish(true)
     },
