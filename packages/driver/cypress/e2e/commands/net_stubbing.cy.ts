@@ -1749,7 +1749,7 @@ describe('network stubbing', { retries: 15 }, function () {
       }).as('create')
 
       cy.then(() => {
-        // @ts-disable:no-floating-promises
+        // tslint:disable:no-floating-promises
         fetch('/post-only', {
           method: 'POST', // *GET, POST, PUT, DELETE, etc.
         })
