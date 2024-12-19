@@ -285,13 +285,14 @@ const bannerCohortOptions: BannerCohortOptions = {
 
 const cohortBuilder = useCohorts()
 
-const getCohortForBanner = async (bannerId: BannerId) => {
+const getCohortForBanner = (bannerId: BannerId) => {
   const cohortConfig: CohortConfig = {
     name: bannerId,
     options: bannerCohortOptions[bannerId] || [],
   }
 
-  return await cohortBuilder.getCohort(cohortConfig)
+  // tslint:disable-next-line:no-floating-promises
+  return cohortBuilder.getCohort(cohortConfig)
 }
 
 const currentCohortOption = computed(() => {
