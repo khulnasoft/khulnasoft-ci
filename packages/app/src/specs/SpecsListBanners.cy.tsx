@@ -158,8 +158,10 @@ describe('<SpecsListBanners />', { viewportHeight: 260, defaultCommandTimeout: 1
         .should('be.visible')
 
         // The ct title has dynamic content and seems complicated to set here, so ignoring
-        if (defaultMessages.specPage.banners.componentTesting.title) {
-          defaultMessages.specPage.banners.componentTesting.title.replace('{0}', 'React')
+        let ctBannerTitle = defaultMessages.specPage.banners.componentTesting.title
+
+        if (ctBannerTitle) {
+          defaultMessages.specPage.banners.componentTesting.title = ctBannerTitle.replace('{0}', 'React')
         }
 
         cy.wrap(Object.entries(defaultMessages.specPage.banners[camelCase(bannerTestId)])).each((entry) => {
