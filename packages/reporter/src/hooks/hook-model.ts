@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { observable, computed, makeObservable } from 'mobx'
 
-import type{ FileDetails } from '@packages/types'
+import type { FileDetails } from '@packages/types'
 import type { Alias } from '../instruments/instrument-model'
 import type Err from '../errors/err-model'
 import type CommandModel from '../commands/command-model'
