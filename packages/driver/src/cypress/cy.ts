@@ -390,9 +390,11 @@ export class $Cy extends EventEmitter2 implements ITimeouts, IStability, IAssert
 
     err.stack = $stackUtils.normalizedStack(err)
 
+    const userInvocationStack = $errUtils.getUserInvocationStack(err, this.state)
+
     err = $errUtils.enhanceStack({
       err,
-      userInvocationStack: $errUtils.getUserInvocationStack(err, this.state),
+      userInvocationStack,
       projectRoot: this.config('projectRoot'),
     })
 
