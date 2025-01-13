@@ -10,14 +10,19 @@ const fs = require('fs').promises
 const la = require('lazy-ass')
 const path = require('path')
 const { readCircleEnv } = require('./circle-env')
+const { XMLParser } = require('fast-xml-parser')
 
-const RESULT_REGEX = /<testsuites name="([^"]+)" time="([^"]+)" tests="([^"]+)" failures="([^"]+)"(?: skipped="([^"]+)"|)>/
 const REPORTS_PATH = '/tmp/cypress/junit'
 
 const expectedResultCount = Number(process.argv[process.argv.length - 1])
 
 const parseResult = (xml) => {
-  const [name, time, tests, failures, skipped] = RESULT_REGEX.exec(xml).slice(1)
+  const { testsuites } = new XMLParser({
+    ignoreAttributes: false,
+    attributeNamePrefix: '',
+  }).parse(xml)
+
+  const { name, time, tests, failures, skipped } = testsuites
 
   return {
     name, time, tests: Number(tests), failures: Number(failures), skipped: Number(skipped || 0),
