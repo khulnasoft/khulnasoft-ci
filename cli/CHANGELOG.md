@@ -1,4 +1,12 @@
 <!-- See the ../guides/writing-the-cypress-changelog.md for details on writing the changelog. -->
+## 14.0.1
+
+_Released 1/28/2024 (PENDING)_
+
+**Bugfixes:**
+
+- Actions performed in `after` hooks, like `.click()` and `.type()` will now correctly retry and perform the action when a test fails. Fixes [#2831](https://github.com/cypress-io/cypress/issues/2831).
+
 ## 14.0.0
 
 _Released 1/7/2024 (PENDING)_
