@@ -37,6 +37,7 @@ export const baseConfig: InfiniteDepthConfigWithExtends[] = [
       '@typescript-eslint/triple-slash-reference': 'off',
       'no-global-assign': 'off',
       'no-unsafe-finally': 'off',
+      '@typescript-eslint/no-empty-object-type': 'off'
     },
   },
 
@@ -60,6 +61,16 @@ export const baseConfig: InfiniteDepthConfigWithExtends[] = [
       '.releaserc.js',
       'dist/**/*',
     ]
+  },
+
+  // globals necessary for mixed js/ts 
+  {
+    languageOptions: {
+      globals: {
+        require: 'readonly',
+        module: 'readonly',
+      }
+    }
   }
 ]
 
@@ -87,7 +98,7 @@ export default ts.config(
         tsconfigRootDir: path.join(__dirname, './ts')
       },
       globals: {
-        ...globals.node,
+        ...globals.node,  
       }
     }
   }
