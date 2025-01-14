@@ -136,6 +136,7 @@ describe('supports every combination of import syntax in a single file', () => {
   it(`import defaultExport4, {
   export5,
 } from './fixtures/kitchenSink'`, () => {
+  // eslint-disable-next-line no-console
     console.log(defaultExport4)
     expect(defaultExport4).to.deep.eq({
       export1: 'export1',

@@ -175,7 +175,7 @@ function log (msg) {
   if (!debug) {
     return
   }
-
+  // eslint-disable-next-line no-console
   console.log(`[cypress:vite-plugin-cypress-esm]: ${msg}`)
 }
 
@@ -197,6 +197,7 @@ function cacheAndProxifyModule (id, module) {
 
     return moduleProxy
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.warn(`Failed to proxy module ${id}, using original which will *not* support stub/spy`, err)
 
     return module

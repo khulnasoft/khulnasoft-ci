@@ -33,18 +33,18 @@ describe('stubbing ES modules', () => {
   })
 
   it('works with react class component', () => {
-    mount(<Foo.BarClassComponent msg='Hello world' />)
+    mount(<Foo.BarClassComponent msg="Hello world" />)
     cy.contains('Hello world').should('exist')
   })
 
   it('works with react function component', () => {
-    mount(<Foo.Foo msg='Hello world' />)
+    mount(<Foo.Foo msg="Hello world" />)
     cy.contains('Hello world').should('exist')
   })
 
   it('stubs react component', () => {
     cy.stub(Foo, 'Foo').callsFake(() => <h1>Stub Component</h1>)
-    mount(<Foo.Foo msg='Hello world' />)
+    mount(<Foo.Foo msg="Hello world" />)
     cy.contains('Stub Component').should('exist')
     cy.contains('Hello world').should('not.exist')
   })
