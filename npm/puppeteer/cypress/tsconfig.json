@@ -2,10 +2,10 @@
   "compilerOptions": {
     "types": [
       "cypress"
-    ]
+    ],
   },
   "include": [
     "../index.d.ts",
-    "e2e/**/*.ts"
+    "**/*.ts"
   ]
 }
