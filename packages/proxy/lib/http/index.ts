@@ -49,7 +49,7 @@ export const debugVerbose = Debug('cypress-verbose:proxy:http')
 export enum HttpStages {
   IncomingRequest,
   IncomingResponse,
-  Error
+  Error,
 }
 
 export type HttpMiddleware<T> = (this: HttpMiddlewareThis<T>) => void
@@ -278,7 +278,7 @@ export class Http {
   socket: CyServer.Socket
   serverBus: EventEmitter
   resourceTypeAndCredentialManager: ResourceTypeAndCredentialManager
-  renderedHTMLOrigins: {[key: string]: boolean} = {}
+  renderedHTMLOrigins: { [key: string]: boolean } = {}
   autUrl?: string
   getCookieJar: () => CookieJar
   protocolManager?: ProtocolManagerShape

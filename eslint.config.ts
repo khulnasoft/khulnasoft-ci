@@ -187,23 +187,6 @@ export const baseConfig: InfiniteDepthConfigWithExtends[] = [
       '@typescript-eslint/no-wrapper-object-types': 'off',
       '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
 
-      'vue/multi-word-component-names': 'off',
-      'vue/html-closing-bracket-spacing': 'off',
-      'vue/no-dupe-keys': 'off',
-      'vue/v-on-event-hyphenation': 'off',
-      'vue/attribute-hyphenation': 'off',
-      'vue/no-useless-template-attributes': 'off',
-
-      'cypress/no-unnecessary-waiting': 'off',
-      'cypress/unsafe-to-chain-command': 'off',
-      'cypress/no-async-tests': 'off',
-      'cypress/no-assigning-return-values': 'off',
-    },
-  },
-
-  // conflicting mocha rules
-  {
-    rules: {
       'mocha/no-mocha-arrows': 'off',
       'mocha/no-setup-in-describe': 'off',
       'mocha/max-top-level-suites': 'off',
@@ -217,6 +200,19 @@ export const baseConfig: InfiniteDepthConfigWithExtends[] = [
       'mocha/no-async-describe': 'off',
       'mocha/no-return-and-callback': 'off',
       'mocha/no-pending-tests': 'off',
+      'mocha/no-nested-tests': 'off',
+
+      'vue/multi-word-component-names': 'off',
+      'vue/html-closing-bracket-spacing': 'off',
+      'vue/no-dupe-keys': 'off',
+      'vue/v-on-event-hyphenation': 'off',
+      'vue/attribute-hyphenation': 'off',
+      'vue/no-useless-template-attributes': 'off',
+
+      'cypress/no-unnecessary-waiting': 'off',
+      'cypress/unsafe-to-chain-command': 'off',
+      'cypress/no-async-tests': 'off',
+      'cypress/no-assigning-return-values': 'off',
     },
   },
 
