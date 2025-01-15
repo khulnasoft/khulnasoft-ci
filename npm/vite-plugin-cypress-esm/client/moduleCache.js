@@ -175,6 +175,7 @@ function log (msg) {
   if (!debug) {
     return
   }
+
   // eslint-disable-next-line no-console
   console.log(`[cypress:vite-plugin-cypress-esm]: ${msg}`)
 }
