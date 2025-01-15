@@ -6,7 +6,7 @@ export type { Socket } from 'socket.io-client'
 
 declare global {
   interface Window {
-    cypressSockets: {[key: string]: CDPBrowserSocket}
+    cypressSockets: { [key: string]: CDPBrowserSocket }
   }
 }
 
@@ -32,7 +32,7 @@ export function client (uri: string, opts?: Partial<ManagerOptions & SocketOptio
   return io(uri, opts)
 }
 
-export function createWebsocket ({ path, browserFamily }: { path: string, browserFamily: string}): SocketShape {
+export function createWebsocket ({ path, browserFamily }: { path: string, browserFamily: string }): SocketShape {
   if (browserFamily === 'chromium') {
     chromium = true
 
