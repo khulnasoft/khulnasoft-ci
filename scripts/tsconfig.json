@@ -1,0 +1,6 @@
+{
+  "extends": "../packages/ts/tsconfig",
+  "compilerOptions": {
+    "allowJs": true,
+  }
+}

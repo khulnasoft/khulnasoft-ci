@@ -230,6 +230,7 @@ export const baseConfig: InfiniteDepthConfigWithExtends[] = [
       'react/jsx-no-target-blank': 'warn',
       'react/no-unknown-property': 'warn',
       'react/jsx-key': 'warn',
+      'react/display-name': 'warn',
 
       // we use react 18+, so these rules do not apply
       'react/react-in-jsx-scope': 'off',
@@ -243,6 +244,7 @@ export const baseConfig: InfiniteDepthConfigWithExtends[] = [
       '.releaserc.js',
       'dist/**/*',
       '**/__snapshots__/**/*',
+      'test/.mocharc.js',
     ],
   },
 
@@ -276,6 +278,8 @@ export const baseConfig: InfiniteDepthConfigWithExtends[] = [
   },
 ]
 
+// applies to ./scripts - eslint tends to crash if this config is in the ./scripts dir?
+
 export default ts.config(
   ...baseConfig,
   {
@@ -297,6 +301,14 @@ export default ts.config(
       globals: {
         ...globals.node,
       },
+      parserOptions: {
+        projectService: false,
+      },
+    },
+  },
+  {
+    rules: {
+      'no-console': 'off',
     },
   },
 )
