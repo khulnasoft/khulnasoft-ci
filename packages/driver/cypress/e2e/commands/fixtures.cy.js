@@ -1,3 +1,4 @@
+/* global Buffer */
 const stripAnsi = require('strip-ansi')
 
 const { assertLogLength } = require('../../support/utils')

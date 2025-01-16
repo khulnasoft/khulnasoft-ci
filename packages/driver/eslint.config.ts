@@ -13,6 +13,17 @@ export default [
           allowDefaultProject: ['index.d.ts', 'cypress/e2e/e2e/origin/dependencies.cy.jsx', 'src/cypress/setter_getter.d.ts'],
         },
       },
+      globals: {
+        ...globals['shared-node-browser'],
+      },
+    },
+  },
+  {
+    files: ['cypress/plugins/*'],
+    languageOptions: {
+      globals: {
+        ...globals['node'],
+      },
     },
   },
 ]

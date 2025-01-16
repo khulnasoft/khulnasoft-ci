@@ -244,8 +244,20 @@ export const baseConfig: InfiniteDepthConfigWithExtends[] = [
       globals: {
         require: 'readonly',
         module: 'readonly',
+        ...globals['shared-node-browser'],
+        ...globals['es2020'], // this should be aligned with tsconfig "lib"
       },
     },
+  },
+
+  // cy, *sx, and vue files are always in browser
+  {
+    files: ['**/*.cy.{js,ts}', '**/*.{j,t}sx', '**/*.vue'],
+      languageOptions: {
+        globals: {
+          ...globals['browser'],
+        },
+      },
   },
 
   {
