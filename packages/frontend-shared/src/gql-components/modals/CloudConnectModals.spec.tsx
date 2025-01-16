@@ -41,7 +41,7 @@ describe('<CloudConnectModals />', () => {
         }
       },
       render (gql) {
-        return (<div className="h-screen">
+        return (<div class="h-screen">
           <CloudConnectModals utmMedium="testing" gql={gql}/>
         </div>)
       },

@@ -8,7 +8,7 @@ describe('<NeedManualUpdateModal />', () => {
         result.projectId = null
       },
       render (gql) {
-        return (<div className="h-screen">
+        return (<div class="h-screen">
           <NeedManualUpdateModal gql={gql} newProjectId='123456'/>
         </div>)
       },
