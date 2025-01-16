@@ -340,7 +340,12 @@ Many Cypress packages print out debugging information to console via the `debug`
 
 ### Coding Style
 
-We use [eslint](https://eslint.org/) to lint all JavaScript code.
+Cypress uses [eslint](https://eslint.org/) to lint all JavaScript code. All packages should import the `baseConfig` from the root `eslint.config.ts`. The only overrides in package-specific `eslint.config.ts` files should be regarding:
+- Which files get processed
+- Which globals are expected for selections of files
+- Downgrading inherited rules from `error` to `warn`, if they cannot be `--fix`ed.
+
+Package-specific `eslint.config.ts` configurations should *never* turn inherited rules off. This is to ensure repository-wide linting standards. If a rule is inappropriately applied to a package or its files, there is likely a better solution than turning the rule off.
 
 This project uses a Git pre-commit hook to lint staged files before committing. See the [`lint-staged` project](https://github.com/okonet/lint-staged) for details.
 `lint-staged` will try to auto-fix any lint errors with `eslint --fix`, so if it fails, you must manually fix the lint errors before committing.
