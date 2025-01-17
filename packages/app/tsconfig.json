@@ -13,6 +13,7 @@
   ],
   "compilerOptions": {
     "noImplicitThis": true,
+    "useDefineForClassFields": true,
     "paths": {
       "@cy/i18n": ["../frontend-shared/src/locales/i18n"],
       "@cy/components/*": ["../frontend-shared/src/components/*"],
@@ -21,6 +22,7 @@
       "@packages/*": ["../*"]
     },
     "target": "ES2022",
+    "allowJs": true,
     "types": [
       "cypress", 
       "cypress-real-events", 

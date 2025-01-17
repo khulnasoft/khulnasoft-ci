@@ -5,11 +5,16 @@
     "lib": ["ES2021", "DOM", "DOM.Iterable"],
     "noImplicitThis": false,
     "preserveWatchOutput": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "noEmit": true,
     "outDir": "dist",
     "noErrorTruncation": true,
-    "types": []
+    "types": [],
+    "resolveJsonModule": true
   },
   "exclude": [
-    "dist"
+    "dist",
+    "test"
   ]
 }
