@@ -53,7 +53,7 @@
     "get-next-version": "node scripts/get-next-version.js",
     "gulp:debug": "node --inspect-brk ./node_modules/.bin/gulp",
     "postinstall": "node ./scripts/run-postInstall.js",
-    "lint": "lerna run lint --concurrency 8",
+    "lint": "lerna run lint --concurrency 2",
     "npm-release": "node scripts/npm-release.js",
     "prepare": "husky install",
     "prepare-release-artifacts": "node ./scripts/prepare-release-artifacts.js",
