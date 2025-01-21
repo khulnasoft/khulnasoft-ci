@@ -16,9 +16,7 @@
     "executableName": "Cypress"
   },
   "win": {
-    "signingHashAlgorithms": [
-      "sha256"
-    ],
+    "signingHashAlgorithms": ["sha256"],
     "sign": "./scripts/windows-sign.js",
     "target": "dir"
   },

@@ -9,7 +9,6 @@ import vue from 'eslint-plugin-vue'
 import stylistic from '@stylistic/eslint-plugin'
 import * as graphql from '@graphql-eslint/eslint-plugin'
 import react from 'eslint-plugin-react'
-import json from 'eslint-plugin-json-files'
 
 /**
  * baseConfig should be imported by other packages that define their own eslint.config.ts
@@ -276,17 +275,6 @@ export const baseConfig: InfiniteDepthConfigWithExtends[] = [
     files: ['webpack.config.js'],
     languageOptions: {
       globals: globals.node,
-    },
-  },
-
-  {
-    files: ['package.json'],
-    plugins: {
-      'json-files': json,
-    },
-    processor: json.processors.json,
-    rules: {
-      'json-files/sort-package-json': 'error',
     },
   },
 ]

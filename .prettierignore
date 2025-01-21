@@ -2,3 +2,7 @@
 
 /.nx/cache
 /.nx/workspace-data
+
+!**/*.json
+**/package.json
+**/package-lock.json
