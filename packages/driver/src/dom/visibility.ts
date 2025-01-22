@@ -258,10 +258,14 @@ const canClipContent = function ($el: JQuery<HTMLElement>, $ancestor: JQuery<HTM
 
   // even if ancestors' overflow is clippable,
   // if the element is position static or relative,
-  // and the element's offset parent is positioned absolute, a descendent of the ancestor, and has no clippable overflow,
+  // and the element's offset parent is positioned absolute, a descendent of the ancestor, has no clippable overflow, and
+  // the offsetParent's offset parent is not descendent of the ancestor,
   // then the ancestor will not clip the element
+  const $offsetParentOffsetParent = $offsetParent.offsetParent()
+
   if ((elHasPositionStatic($el) || elHasPositionRelative($el))
-    && elHasPositionAbsolute($offsetParent) && isDescendent($ancestor, $offsetParent) && !elHasClippableOverflow($offsetParent)
+    && elHasPositionAbsolute($offsetParent) && isDescendent($ancestor, $offsetParent)
+    && !elHasClippableOverflow($offsetParent) && !isDescendent($ancestor, $offsetParentOffsetParent)
   ) {
     return false
   }

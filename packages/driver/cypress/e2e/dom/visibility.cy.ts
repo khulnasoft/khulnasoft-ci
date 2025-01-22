@@ -995,10 +995,6 @@ describe('src/cypress/dom/visibility', () => {
       })
 
       it('is visible when element is statically positioned and parent element is absolutely positioned and ancestor has overflow hidden', function () {
-        const add = (el) => {
-          return $(el).appendTo(cy.$$('body'))
-        }
-
         cy.$$('body').empty()
 
         const el = add(`
@@ -1015,10 +1011,6 @@ describe('src/cypress/dom/visibility', () => {
       })
 
       it('is visible when element is relatively positioned and parent element is absolutely positioned and ancestor has overflow auto', function () {
-        const add = (el) => {
-          return $(el).appendTo(cy.$$('body'))
-        }
-
         cy.$$('body').empty()
 
         const el = add(`
@@ -1042,6 +1034,28 @@ describe('src/cypress/dom/visibility', () => {
         `)
 
         expect(el.find('#visible-button')).to.be.visible
+      })
+
+      it('is hidden when parent element is absolutely position and offset parent is a decendent of the ancestor', function () {
+        cy.$$('body').empty()
+
+        add(`
+          <div style="display: grid; grid-template-columns: 332px 1fr; grid-template-rows: 62px 1fr;">
+            <div style="overflow-y: auto;">
+              <div style="height: 297px; position: relative;">
+                <div style="height: 96px; position: absolute; left: 0; top: 0;">
+                  <a href="">test test-1</a>
+                </div>
+                <div style="height: 36px; position: absolute; left: 0; top: 96px; background-color: red;">
+                  <a href="">test test-2</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        `)
+
+        cy.contains('test-2').should('not.be.visible')
+        cy.contains('test-1').should('be.visible')
       })
     })
 
