@@ -240,7 +240,7 @@ export class CombinedAgent {
         return this.httpsAgent.addRequest(req, options as https.RequestOptions)
       }
 
-      this.httpAgent.addRequest(req, options)
+      return this.httpAgent.addRequest(req, options)
     })
   }
 }
