@@ -6,6 +6,8 @@
     "strict": false
   },
   "linterOptions": {
-    "exclude": ["/dist/**/*"]
+    "exclude": [
+      "dist"
+    ]
   }
 }
