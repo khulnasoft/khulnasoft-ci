@@ -4,5 +4,8 @@
     "target": "es2020",
     "allowJs": true,
     "strict": false
+  },
+  "linterOptions": {
+    "exclude": ["/dist/**/*"]
   }
 }
